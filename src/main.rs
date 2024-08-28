@@ -22,6 +22,20 @@ fn main() {
             println!("What went wrong: {}", what_went_wrong);
         }
     }
+
+    match validate_email(String::from("casey@casey.com")) {
+        Ok(..) => println!("\nEmail address is valid"),
+        Err(error_message) => {
+            println!("\nValidation Error Message: {}", error_message)
+        }
+    }
+
+    match validate_email(String::from("caseycasey.com")) {
+        Ok(..) => println!("\nEmail address is valid"),
+        Err(error_message) => {
+            println!("\nValidation Error Message: {}", error_message)
+        }
+    }
 }
 
 fn divide(a: f64, b: f64) -> Result<f64, Error> {
@@ -30,4 +44,13 @@ fn divide(a: f64, b: f64) -> Result<f64, Error> {
     } else {
         Ok (a / b)
     }
+}
+
+fn validate_email(email: String) -> Result<(), Error> {
+    if email.contains("@") {
+        Ok(())
+    } else {
+        Err(Error::other("Email addresses must have an ampersand."))
+    }
+
 }
