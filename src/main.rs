@@ -1,56 +1,34 @@
-use std::fs;
 use std::io::Error;
 
-fn main() {
-    // let text = fs::read_to_string("logs.txt");
-    // println!("{:#?}", text);
-    
-    match divide(5.0, 3.0) {
-        Ok(result_of_division) => {
-            println!("\n\nResult of Division: {}", result_of_division);
-        }
-        Err(what_went_wrong) => {
-            println!("What went wrong: {}", what_went_wrong);
-        }
-    }
-
-    match divide(5.0, 0.0) {
-        Ok(result_of_division) => {
-            println!("\n\nResult of Division: {}", result_of_division);
-        }
-        Err(what_went_wrong) => {
-            println!("What went wrong: {}", what_went_wrong);
-        }
-    }
-
-    match validate_email(String::from("casey@casey.com")) {
-        Ok(..) => println!("\nEmail address is valid"),
-        Err(error_message) => {
-            println!("\nValidation Error Message: {}", error_message)
-        }
-    }
-
-    match validate_email(String::from("caseycasey.com")) {
-        Ok(..) => println!("\nEmail address is valid"),
-        Err(error_message) => {
-            println!("\nValidation Error Message: {}", error_message)
-        }
-    }
-}
-
-fn divide(a: f64, b: f64) -> Result<f64, Error> {
-    if b == 0.0 {
-        Err(Error::other("Cannot divide by zero."))
+// Todo: add in a return type
+fn validate_ingredients(ingredients: &Vec<String>) -> Result<(), Error>{
+    if ingredients.len() > 3 {
+        Err(Error::other("A maximum of 3 ingredients are allowed."))
     } else {
-        Ok (a / b)
-    }
-}
-
-fn validate_email(email: String) -> Result<(), Error> {
-    if email.contains("@") {
         Ok(())
-    } else {
-        Err(Error::other("Email addresses must have an ampersand."))
     }
-
 }
+
+fn main() {
+    let ingredients = vec![
+        String::from("Cheese"),
+        String::from("Tomatoes"),
+        String::from("Peppers"),
+        String::from("Olives"),
+    ];
+    
+    // Todo: validation is an operation that might succeed or fail
+    // Print out a success or fail message based on whether
+    // it passes validation
+    match validate_ingredients(&ingredients) {
+        Ok(..) => println!("List contains a valid number of ingredients."),
+        Err(err_msg) => println!("{}", err_msg)
+    }
+}
+
+
+
+
+
+
+
