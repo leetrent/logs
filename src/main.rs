@@ -16,7 +16,10 @@ fn main() {
     match fs::read_to_string("logs.txt") {
         Ok(read_text) => {
             let error_logs = extract_errors(read_text.as_str());
-            println!("{:#?}", error_logs);
+            match fs::write("errors.txt", error_logs.join("\n")) {
+                Ok(..) => println!("Successfully wrote errors to errors.txt file"),
+                Err(error_message) => println!("Attempt to write errors to errors.txt file FAILED. Reason: {}", error_message)
+            }
         },
         Err(err_msg) => {
             println!("{}", err_msg);
