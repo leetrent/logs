@@ -13,25 +13,7 @@ fn extract_errors(text: &str) -> Vec<&str> {
 }
 
 fn main() {
-    match fs::read_to_string("logs.txt") {
-        Ok(read_text) => {
-            let error_logs = extract_errors(read_text.as_str());
-            match fs::write("errors.txt", error_logs.join("\n")) {
-                Ok(..) => println!("Successfully wrote errors to errors.txt file"),
-                Err(error_message) => println!("Attempt to write errors to errors.txt file FAILED. Reason: {}", error_message)
-            }
-        },
-        Err(err_msg) => {
-            println!("{}", err_msg);
-        }
-    }
-
-    match fs::read_to_string("no_file.txt") {
-        Ok(read_text) => {
-            println!("# of characters read: {}", read_text.len());
-        },
-        Err(err_msg) => {
-            println!("{}", err_msg);
-        }
-    }
+    let text = fs::read_to_string("logs.txt").expect("Failed to read logs.txt");
+    let error_logs = extract_errors(text.as_str());
+    fs::write("errors.txt", error_logs.join("\n")).expect("Failed to write error_logs to errors.txt");
 }
